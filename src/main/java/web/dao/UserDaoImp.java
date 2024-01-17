@@ -13,7 +13,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Component
-@Service
 public class UserDaoImp implements UserDao {
 
     private EntityManagerFactory entityManagerFactory;
@@ -37,10 +36,10 @@ public class UserDaoImp implements UserDao {
     @Transactional
     @Override
     public List<User> listUsers() {
-//        EntityManager em = entityManagerFactory.createEntityManager();
-//        TypedQuery<User> query = (TypedQuery<User>) em.createQuery("from User");
-//        return query.getResultList();
-        return null;
+        EntityManager em = entityManagerFactory.createEntityManager();
+        TypedQuery<User> query = (TypedQuery<User>) em.createQuery("from User");
+        return query.getResultList();
+
     }
 
     @Transactional

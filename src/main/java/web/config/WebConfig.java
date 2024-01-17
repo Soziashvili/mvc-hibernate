@@ -13,21 +13,30 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+import web.controller.UserController;
 import web.service.UserService;
+import web.service.UserServiceImp;
 
 import javax.transaction.Transactional;
 
 //@Component
 @Configuration
 @EnableWebMvc
-@ComponentScan(value = {"web.controller", "web.model"})
+@ComponentScan(value = "web")//{"web.controller", "web.dao", "web.model", "web.service", "web.service"})
 public class WebConfig implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;
 
     @Autowired
     public WebConfig(ApplicationContext applicationContext) {
+
         System.out.println("web config");
+
+//        AnnotationConfigApplicationContext context =
+               // new AnnotationConfigApplicationContext(AppConfig.class);
+        //UserController uc = new UserController();
+        //context.register(WebConfig.class);
+        //UserService userService = context.getBean(UserService.class);
         this.applicationContext = applicationContext;
     }
 

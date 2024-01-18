@@ -2,11 +2,8 @@ package web.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import web.model.User;
 
-import javax.persistence.PersistenceUnit;
-import javax.persistence.TypedQuery;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -15,12 +12,10 @@ import java.util.List;
 @Component
 public class UserDaoImp implements UserDao {
 
-    private EntityManagerFactory entityManagerFactory;
+    private final EntityManagerFactory entityManagerFactory;
 
     @Autowired
     public UserDaoImp(EntityManagerFactory entityManagerFactory) {
-        System.out.println("entity manager");
-
         this.entityManagerFactory = entityManagerFactory;
     }
 
@@ -37,9 +32,7 @@ public class UserDaoImp implements UserDao {
     @Override
     public List<User> listUsers() {
         EntityManager em = entityManagerFactory.createEntityManager();
-        TypedQuery<User> query = (TypedQuery<User>) em.createQuery("from User");
-        return query.getResultList();
-
+        return em.createQuery("from User", User.class).getResultList();
     }
 
     @Transactional

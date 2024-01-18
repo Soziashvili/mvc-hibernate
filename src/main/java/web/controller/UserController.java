@@ -15,7 +15,7 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    private UserService userService;
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
@@ -40,8 +40,9 @@ public class UserController {
     }
 
     @PostMapping
-    public String create(@ModelAttribute("user") User user) {
+    public String create(@ModelAttribute("user") User user, Model model) {
         userService.add(user);
+        model.addAttribute("users", userService.listUsers());
         return "users/new";
     }
 

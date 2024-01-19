@@ -24,13 +24,16 @@ public class UserController {
     }
 
     @GetMapping()
-    public String printWelcome(ModelMap model) {
-        List<String> messages = new ArrayList<>();
-        messages.add("Hello!");
-        messages.add("I'm Spring MVC application");
-        messages.add("5.2.0 version by sep'19 ");
-        model.addAttribute("messages", messages);
+    public String getUsers(Model model) {
+        model.addAttribute("users", userService.listUsers());
         return "users/index";
+    }
+
+    @GetMapping("/")
+    public String showUser(@RequestParam("id") int id, Model model) {
+        System.out.println(id);
+        model.addAttribute("user", userService.findUserById(id));
+        return "users/show";
     }
 
     @GetMapping("/new")
@@ -41,8 +44,7 @@ public class UserController {
 
     @PostMapping
     public String create(@ModelAttribute("user") User user, Model model) {
-        userService.add(user);
-        model.addAttribute("users", userService.listUsers());
+        userService.addUser(user);
         return "users/new";
     }
 

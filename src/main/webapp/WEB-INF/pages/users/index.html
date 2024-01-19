@@ -2,15 +2,36 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title>Users</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        td, th {
+            padding: 5px;
+            border: 1px solid black;
+        }
+    </style>
 </head>
 <body>
 
-<div>
-    <th:block th:each="msg : ${messages}">
-        <h1 th:text="${msg}"></h1>
-    </th:block>
-</div>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Lastname</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td><a th:href="@{/users/(id=${user.getId()})}" th:text="${user.getId()}"></a></td>
+        <td><a th:href="@{/users/(id=${user.getId()})}" th:text="${user.getFirstName()}"></a></td>
+        <td><a th:href="@{/users/(id=${user.getId()})}" th:text="${user.getLastName()}"></a></td>
+        <td><a th:href="@{/users/(id=${user.getId()})}" th:text="${user.getEmail()}"></a></td>
+    </tbody>
+</table>
 
 </body>
 </html>

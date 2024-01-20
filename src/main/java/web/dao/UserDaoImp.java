@@ -6,6 +6,7 @@ import web.model.User;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -42,5 +43,30 @@ public class UserDaoImp implements UserDao {
         User user = em.find(User.class, id);
         em.detach(user);
         return user;
+    }
+
+    @Transactional
+    @Override
+    public void deleteUser(int id) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        Query query = em.createQuery("delete User where id = :id");
+        query.setParameter("id", id);
+        em.joinTransaction();
+        query.executeUpdate();
+        em.flush();
+        em.clear();
+    }
+
+    @Transactional
+    @Override
+    public void updateUser(int id, User user) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        Query query = em.createQuery("update User set firstName = :firstName, lastName = :lastName, email = :email where id = :id");
+        query.setParameter("firstName", user.getFirstName());
+        query.setParameter("lastName", user.getLastName());
+        query.setParameter("email", user.getEmail());
+        query.setParameter("id", id);
+        em.joinTransaction();
+        query.executeUpdate();
     }
 }

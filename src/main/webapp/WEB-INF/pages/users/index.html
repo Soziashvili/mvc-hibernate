@@ -30,8 +30,15 @@
         <td><a th:href="@{/users/(id=${user.getId()})}" th:text="${user.getFirstName()}"></a></td>
         <td><a th:href="@{/users/(id=${user.getId()})}" th:text="${user.getLastName()}"></a></td>
         <td><a th:href="@{/users/(id=${user.getId()})}" th:text="${user.getEmail()}"></a></td>
+        <td><a th:href="@{/users/edit/(id=${user.getId()})}">Edit</a></td>
+        <td><a th:href="@{/users/delete/(id=${user.getId()})}">Delete</a></td>
+
     </tbody>
 </table>
+
+<br/>
+
+<a href="/users/new">Create new user</a>
 
 </body>
 </html>

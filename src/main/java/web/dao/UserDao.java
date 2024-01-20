@@ -13,4 +13,8 @@ public interface UserDao {
     List<User> listUsers();
 
     User findUserById(int id);
+
+    void deleteUser(int id);
+
+    void updateUser(int id, User user);
 }

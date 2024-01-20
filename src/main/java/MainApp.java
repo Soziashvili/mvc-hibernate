@@ -21,15 +21,21 @@ public class MainApp {
 //        User user3 = new User("User3", "Lastname3", "user3@mail.ru");
 //        User user4 = new User("User4", "Lastname4", "user4@mail.ru");
 //
-//        userService.add(user1);
-//        userService.add(user2);
-//        userService.add(user3);
-//        userService.add(user4);
+//        userService.addUser(user1);
+//        userService.addUser(user2);
+//        userService.addUser(user3);
+//        userService.addUser(user4);
 //
 //        System.out.println(userService.findUserById(3));
 //        System.out.println(userService.findUserById(1));
 //        System.out.println(userService.findUserById(4));
 //        System.out.println(userService.findUserById(2));
+//
+//        userService.deleteUser(2);
+//
+//        User user5 = new User("test", "test1", "test@mail.ru");
+//
+//        userService.updateUser(4, user5);
 //
 //        List<User> users = userService.listUsers();
 //        for (User user : users) {

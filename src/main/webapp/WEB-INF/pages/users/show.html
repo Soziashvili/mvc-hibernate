@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <title>User</title>
+    <style>
+        * {
+            font-family: "Arial", sans-serif;
+        }
+        div {
+            padding-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
 
-<div style="font-size: large">The user with ID: <span th:text="${user.getId()}">User</span></div>
-<div>Name: <span th:text="${user.getFirstName()}">User</span></div>
-<div>Last Name: <span th:text="${user.getLastName()}">User</span></div>
-<div>Email: <span th:text="${user.getEmail()}">User</span></div>
+<div style="font-size: large">The user with id <span th:text="${user.getId()}">id</span></div>
+<div>Name: <span th:text="${user.getFirstName()}">name</span></div>
+<div>Last name: <span th:text="${user.getLastName()}">last name</span></div>
+<div>Email: <span th:text="${user.getEmail()}">email</span></div>
 
 <br/>
 <hr/>

@@ -17,28 +17,28 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan(value = {"web.dao", "web.model", "web.service", "web.controller", "web.config"})
+@ComponentScan("web")
 public class AppConfig {
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        System.out.println("entity manager factory");
         LocalContainerEntityManagerFactoryBean entityManager
                 = new LocalContainerEntityManagerFactoryBean();
+
         entityManager.setDataSource(dataSource());
         entityManager.setPackagesToScan("web.model");
 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+
         entityManager.setJpaVendorAdapter(vendorAdapter);
         entityManager.setJpaProperties(additionalProperties());
-
         return entityManager;
     }
 
     @Bean
     public DataSource dataSource(){
-        System.out.println("data source");
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         dataSource.setUrl("jdbc:mysql://localhost:3306/users_db?verifyServerCertificate=false&useSSL=false&requireSSL=false&useLegacyDatetimeCode=false&amp&serverTimezone=UTC");
         dataSource.setUsername( "root" );
@@ -48,26 +48,23 @@ public class AppConfig {
 
     @Bean
     public PlatformTransactionManager transactionManager() {
-        System.out.println("transaction manager");
         JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
 
+        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
         return transactionManager;
     }
 
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
-        System.out.println("exception translation");
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
     Properties additionalProperties() {
-        System.out.println("additional properties");
         Properties properties = new Properties();
+
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-
         return properties;
     }
 }

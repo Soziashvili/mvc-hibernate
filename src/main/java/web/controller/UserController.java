@@ -11,7 +11,7 @@ import web.service.UserService;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/")
 public class UserController {
 
     private final UserService userService;
@@ -27,19 +27,19 @@ public class UserController {
         return "index";
     }
 
-    @GetMapping("/")
+    @GetMapping("users")
     public String showUser(@RequestParam("id") int id, Model model) {
         model.addAttribute("user", userService.findUserById(id));
         return "users/show";
     }
 
-    @GetMapping("/new")
+    @GetMapping("users/new")
     public String showNewUserForm(Model model) {
         model.addAttribute("user", new User());
         return "users/new";
     }
 
-    @PostMapping()
+    @PostMapping
     public String createUser(@ModelAttribute("user") @Valid User user,
                              BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -47,16 +47,16 @@ public class UserController {
         }
 
         userService.addUser(user);
-        return "redirect:/users";
+        return "redirect:/";
     }
 
-    @GetMapping("/edit/")
+    @GetMapping("users/edit/")
     public String showEditForm(@RequestParam("id") int id, Model model) {
         model.addAttribute("user", userService.findUserById(id));
         return "users/update";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/users/update/")
     public String editUser(@ModelAttribute("user") @Valid User user,
                            BindingResult bindingResult,
                            @RequestParam("id") int id) {
@@ -65,13 +65,13 @@ public class UserController {
         }
 
         userService.updateUser(id,user);
-        return "redirect:/users";
+        return "redirect:/";
     }
 
-    @GetMapping("/delete/")
+    @GetMapping("users/delete/")
     public String deleteUser(@RequestParam("id") int id) {
         userService.deleteUser(id);
-        return "redirect:/users";
+        return "redirect:/";
     }
 
 }

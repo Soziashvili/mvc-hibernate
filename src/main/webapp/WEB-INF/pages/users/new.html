@@ -27,7 +27,7 @@
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/users}" th:object="${user}" class="form">
+<form th:method="POST" th:action="@{/}" th:object="${user}" class="form">
     <div class="form">
         <label for="name">First name</label>
         <input type="text" th:field="*{firstName}" id="name"/>

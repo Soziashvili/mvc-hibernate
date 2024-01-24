@@ -27,7 +27,7 @@ public class UserController {
         return "index";
     }
 
-    @GetMapping("users")
+    @GetMapping("/users")
     public String showUser(@RequestParam("id") int id, Model model) {
         model.addAttribute("user", userService.findUserById(id));
         return "users/show";

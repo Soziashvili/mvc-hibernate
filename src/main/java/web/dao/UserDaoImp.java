@@ -1,70 +1,41 @@
 package web.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import web.model.User;
 
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
-@Component
+@Service
 public class UserDaoImp implements UserDao {
 
-    private final EntityManagerFactory entityManagerFactory;
-
-    @Autowired
-    public UserDaoImp(EntityManagerFactory entityManagerFactory) {
-        this.entityManagerFactory = entityManagerFactory;
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public void addUser(User user) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-
-        em.getTransaction().begin();
-        em.persist(user);
-        em.getTransaction().commit();
+        entityManager.persist(user);
     }
 
     @Override
     public List<User> listUsers() {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        return em.createQuery("from User", User.class).getResultList();
+        return entityManager.createQuery("from User", User.class).getResultList();
     }
 
     @Override
     public User findUserById(int id) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        User user = em.find(User.class, id);
-
-        em.detach(user);
-        return user;
+        return entityManager.find(User.class, id);
     }
 
     @Override
     public void deleteUser(int id) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        Query query = em.createQuery("delete User where id = :id");
-
-        query.setParameter("id", id);
-        em.joinTransaction();
-        query.executeUpdate();
-        em.flush();
-        em.clear();
+        User user = entityManager.find(User.class, id);
+        entityManager.remove(user);
     }
 
     @Override
     public void updateUser(int id, User user) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        Query query = em.createQuery("update User set firstName = :firstName, lastName = :lastName, email = :email where id = :id");
-
-        query.setParameter("firstName", user.getFirstName());
-        query.setParameter("lastName", user.getLastName());
-        query.setParameter("email", user.getEmail());
-        query.setParameter("id", id);
-        em.joinTransaction();
-        query.executeUpdate();
+        entityManager.merge(user);
     }
 }
